@@ -1,5 +1,5 @@
 # AsciiVideoCPP
-A simple code using OpenCV and C++ to create a ASCII Video Generator  
+A simple code using OpenCV and C++ to create a ASCII Video 
 
 /!\ <b>Warning</b> This code can only work on Windows /!\  
 
