@@ -61,9 +61,9 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
     string veryFinalDisplay;
 
     string musicName;
-
-    maximize_window();
+    
     change_console_size();
+    maximize_window();
 
     std::cout << "What is the music name ? Press d for default. Must be a wav file." << endl;
     cin >> musicName;
