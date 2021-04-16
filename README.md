@@ -19,8 +19,7 @@ I recommend using this program with small videos, as it could take time. You can
 5. Finally, the program will read each .txt file one by one and display it into the window, giving the illusion of a video. The folders containing the images and the text files won't be deleted, so they can be re-used again in the future if you want to rewatch the same video. Of course, you can delete them manually.  
   
 ## Known issues  
-
-- Sometimes the image jumps a bit between frames. This happened with some videos, but not all of them. I have no idea on how to solve this issue.  
+ 
 - The program crashes after downloading the frames. You can simply reopen the program afterwards and skip the "Download frames" part by pressing "N".  
 - The program works really well with the Bad Apple!! video because it is big white and black shadows. However, the rendering is not as great with other videos. You can try lowering the font size in the "change_console_size()" function, but the console had trouble rendering as much text this fast on my laptop.  
 - The program doesn't take into consideration the general brightness of the image, which means that if the video is happening in a dark place for example, it will be hard to detect the different parts of the image.  
