@@ -27,7 +27,7 @@ void change_console_size() {
 
 }
 
-void maximize_window() {
+void maximize_window() { //Function taken from https://cboard.cprogramming.com/windows-programming/55672-maximizing-console-window-full-screen.html
     HWND hWnd;
     SetConsoleTitle(L"ASCII Video");
     hWnd = FindWindow(NULL, L"ASCII Video");
@@ -159,7 +159,7 @@ void loadFrame(Mat image, int frameNumber) {
 
             int colorInt = color[0];
 
-            //ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
+            //ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."] => https://github.com/CalvinLoke/bad-apple/blob/master/touhou_bad_apple_v2.py
 
             if (colorInt <= 10) {
                 finalDisplay += "@";
