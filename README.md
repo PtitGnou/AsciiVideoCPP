@@ -26,6 +26,7 @@ Demonstration : https://www.youtube.com/watch?v=6RpQRvMbSeA&ab_channel=PtitGnou 
 - [x] ~~The program works really well with the Bad Apple!! video because it is big white and black shadows. However, the rendering is not as great with other videos. You can try lowering the font size in the "change_console_size()" function, but the console had trouble rendering as much text this fast on my laptop.~~ *Resolved by using printf instead of cout, resulting in faster display and making it possible to increase number of pixel being displayed without lag* 
 - [ ] The program crashes after downloading the frames. You can simply reopen the program afterwards and skip the "Download frames" part by pressing "N".  
 - [ ] The program doesn't take into consideration the general brightness of the image, which means that if the video is happening in a dark place for example, it will be hard to detect the different parts of the image.  
+- [ ] Sometimes, the video loses some milliseconds, which is enough to make it seem disconnected with the audio (and finish after it).
   
 ## Disclaimer  
 
