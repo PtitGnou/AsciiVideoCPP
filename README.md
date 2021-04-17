@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AsciiVideoCPP
 A simple code using OpenCV and C++ to create a ASCII Video 
 
@@ -32,7 +31,7 @@ I am not a professional, and I know this program has a lot of issues.
 This project was simply a fun thing I wanted to try, and it definitely made me improve my knowledge of the C++ language.  
 I first had the inspiration for this project after looking at this project in Python, using the same library : https://github.com/CalvinLoke/bad-apple  
 Furthermore, a some parts of my code are not original, and are taken from Stack Overflow. I tried referencing the sources as much as I could.
-=======
+
 # AsciiVideoCPP
 A simple code using OpenCV and C++ to create a ASCII Video 
 
@@ -66,4 +65,3 @@ I am not a professional, and I know this program has a lot of issues.
 This project was simply a fun thing I wanted to try, and it definitely made me improve my knowledge of the C++ language.  
 I first had the inspiration for this project after looking at this project in Python, using the same library : https://github.com/CalvinLoke/bad-apple  
 Furthermore, a some parts of my code are not original, and are taken from Stack Overflow. I tried referencing the sources as much as I could.
->>>>>>> 31b9d89deba886aace5263ffb81bb4143f6dab3c
