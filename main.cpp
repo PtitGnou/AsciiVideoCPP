@@ -98,7 +98,9 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
         veryFinalDisplay = strStream.str();
         stream.close();
 
-        std::cout << "\r" << veryFinalDisplay << "\n";
+        printf("\r");
+        printf("%s", veryFinalDisplay.c_str());
+        printf("\n");
 
         target_tp += time_between_frames;          
         std::this_thread::sleep_until(target_tp);
