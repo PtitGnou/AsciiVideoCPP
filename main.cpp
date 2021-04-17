@@ -19,7 +19,7 @@ void change_console_size() {
     cfi.cbSize = sizeof(cfi);
     cfi.nFont = 0;
     cfi.dwFontSize.X = 0;                   // Width of each character in the font
-    cfi.dwFontSize.Y = 10;                  // Height
+    cfi.dwFontSize.Y = 6;                  // Height
     cfi.FontFamily = FF_DONTCARE;
     cfi.FontWeight = FW_NORMAL;
     std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
@@ -65,7 +65,7 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
     change_console_size();
     maximize_window();
 
-    std::cout << "What is the music name ? Press d for default. Must be a wav file." << endl;
+    std::cout << "What is the music name ? Press d for default, n for no music. Must be a wav file." << endl;
     cin >> musicName;
 
     if (musicName == "d") {
@@ -80,7 +80,10 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
 
     clear_screen();
     
-    PlaySoundA(musicPathStr.c_str(), NULL, SND_ASYNC);
+    if (musicName != "n.wav") {
+        PlaySoundA(musicPathStr.c_str(), NULL, SND_ASYNC);
+    }
+    
 
     int FPS = frameRate; //Huge thanks to Ted Lyngmo https://stackoverflow.com/questions/65112289/sleep1-sleep-more-than-1-millisecond-windows-10-20h2-problem/65112657#65112657
     auto time_between_frames = std::chrono::microseconds(std::chrono::seconds(1)) / FPS;
@@ -404,8 +407,8 @@ void handleVideo(VideoCapture cap, string videoName){
     textPathStr += "\\TextDir\\txt";
     std::replace(textPathStr.begin(), textPathStr.end(), '\\', '/');
 
-    std::cout << "\nAll files downloaded. Launching the video... [Press any key to continue]\n";
-    cin.ignore();
+    std::cout << "\nAll files downloaded. Launching the video... \n";
+
     displayFrame(totalFrames, textPathStr, frameRate);
 }
 
