@@ -62,8 +62,8 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
 
     string musicName;
 
-    maximize_window();
     change_console_size();
+    maximize_window();
 
     std::cout << "What is the music name ? Press d for default. Must be a wav file." << endl;
     cin >> musicName;
@@ -159,9 +159,23 @@ void loadFrame(Mat image, int frameNumber) {
 
             int colorInt = color[0];
 
+            if (colorInt >= 200) {
+                colorInt += 35;
+                if (colorInt >= 255) {
+                    colorInt = 255;
+                }
+            }
+            else if (colorInt <= 120) {
+                colorInt -= 40;
+
+                if (colorInt <= 0) {
+                    colorInt = 0;
+                }
+            }
+
             //ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
-            if (colorInt <= 10) {
+            if (colorInt <= 18) {
                 finalDisplay += "@";
             }
             else if (colorInt <= 30) {
