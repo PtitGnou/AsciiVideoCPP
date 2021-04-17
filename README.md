@@ -18,7 +18,7 @@ I recommend using this program with small videos, as it could take time. You can
 4. If it hasn't already done it, the program will then convert each frame in a .txt file. The window will be maximized, and the console font size reduced for better quality. The frames will be resized.  
 5. Finally, the program will read each .txt file one by one and display it into the window, giving the illusion of a video. The folders containing the images and the text files won't be deleted, so they can be re-used again in the future if you want to rewatch the same video. Of course, you can delete them manually.  
   
-Demonstration (files were already downloaded) : https://www.youtube.com/watch?v=6RpQRvMbSeA&ab_channel=PtitGnou
+Demonstration : https://www.youtube.com/watch?v=6RpQRvMbSeA&ab_channel=PtitGnou (files were already downloaded)
   
 ## Known issues  
  
