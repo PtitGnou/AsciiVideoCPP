@@ -13,9 +13,9 @@ It works as follow :
 To remove the video's audio, I recommend installing ffmpeg and doing `ffmpeg -i input-video -c copy -an output-video` (remove input-video and output-video by the video's file's name).  
 
 2. Launch the .exe file : input the audioless video's file's name (without the .mp4)  
-3. If it hasn't already done it, the program will download each frame of the video in a folder placed inside of the .exe's directory. The frames are in black and white.  
+3. If it hasn't already done it, the program will download each frame of the video in a folder placed inside of the .exe's directory. The frames are in black and white. This could take some time but I recommend giving your videos a small name as it will make the downloading much faster.  
 I recommend using this program with small videos, as it could take time. You can make test with the Bad Apple!! opening included in this repo. The video is already audioless.
-This could take some time but I recommend giving your videos a small name as it will make the downloading much faster.  
+ 
 4. If it hasn't already done it, the program will then convert each frame in a .txt file. The window will be maximized, and the console font size reduced for better quality. The frames will be resized.  
 5. Finally, the program will read each .txt file one by one and display it into the window, giving the illusion of a video. The folders containing the images and the text files won't be deleted, so they can be re-used again in the future if you want to rewatch the same video. Of course, you can delete them manually.  
   
