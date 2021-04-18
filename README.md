@@ -8,7 +8,7 @@ The code is definitely not perfect and has several know issues.
 Furthermore, it could be improved to be more efficient in regards of CPU usage, but also in converting the video properly.  
 
 It works as follow :  
-1. Put in the same directory the .exe file, the video's audio and the video you want to convert <b>OR DOWNLOAD IT DIRECTLY FROM YOUTUBE IN THE RIGHT FORMAT (Python and ffmpeg needs to be installed on your computer</b>.   
+1. Put in the same directory the .exe file, the video's audio and the video you want to convert <b>OR DOWNLOAD IT DIRECTLY FROM YOUTUBE IN THE RIGHT FORMAT (Python and ffmpeg needs to be installed on your computer)</b>.   
 <b>The video must be a audioless .mp4, and the audio a .wav (if you download it from youtube using the script, it will already be in the right format)</b>  
 To remove the video's audio, I recommend installing ffmpeg and doing `ffmpeg -i input-video -c copy -an output-video` (remove input-video and output-video by the video's file's name).  
 
