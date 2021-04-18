@@ -13,7 +13,9 @@ using namespace std;
 namespace fs = std::filesystem;
 using namespace System;
 
-void change_console_size(int size) {
+
+
+void change_console_size(int size) { //Function to change console's font size
 
     CONSOLE_FONT_INFOEX cfi; //https://stackoverflow.com/questions/35382432/how-to-change-the-console-font-size
     cfi.cbSize = sizeof(cfi);
@@ -27,7 +29,7 @@ void change_console_size(int size) {
 
 }
 
-void maximize_window() { //https://stackoverflow.com/questions/5300170/maximize-console-windows-in-windows-7/5300345#5300345
+void maximize_window() { //Function to maximize window https://stackoverflow.com/questions/5300170/maximize-console-windows-in-windows-7/5300345#5300345
     HWND hWnd;
     SetConsoleTitle(L"ASCII Video");
     hWnd = FindWindow(NULL, L"ASCII Video");
@@ -56,10 +58,9 @@ void clear_screen(char fill = ' ') { //Function to clear console output https://
     SetConsoleCursorPosition(console, tl);
 }
 
-void displayFrame(int numberOfFrames, string textPath, const int frameRate, int size) {
+void displayFrame(int numberOfFrames, string textPath, const int frameRate, int size) { //Final step => Display frames
     string framePath;
     string veryFinalDisplay;
-
     string musicName;
 
     change_console_size(size);
@@ -81,12 +82,12 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate, int 
     clear_screen();
     
     if (musicName != "n.wav") {
-        PlaySoundA(musicPathStr.c_str(), NULL, SND_ASYNC);
+        PlaySoundA(musicPathStr.c_str(), NULL, SND_ASYNC); //We play the music
     }
     
 
     int FPS = frameRate; //Huge thanks to Ted Lyngmo https://stackoverflow.com/questions/65112289/sleep1-sleep-more-than-1-millisecond-windows-10-20h2-problem/65112657#65112657
-    auto time_between_frames = std::chrono::microseconds(std::chrono::seconds(1)) / FPS;
+    auto time_between_frames = std::chrono::microseconds(std::chrono::seconds(1)) / FPS; //Used to make sure the video is rendering properly at its original framerate
 
     auto target_tp = std::chrono::steady_clock::now();
 
@@ -95,7 +96,7 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate, int 
 
         framePath = textPath + to_string(t) + ".txt";
 
-        ifstream stream(framePath);
+        ifstream stream(framePath); //We open the txt file, give its content to the veryFinalDisplay variable and print it out
         stringstream strStream;
         strStream << stream.rdbuf();
         veryFinalDisplay = strStream.str();
@@ -111,9 +112,9 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate, int 
     }
 }
 
-void loadFrame(Mat image, int frameNumber, int size) {
+void loadFrame(Mat image, int frameNumber, int size) { //Function used to create the txt file
 
-    if (frameNumber == 1) {
+    if (frameNumber == 1) { //We make sure we are in the right directory
         fs::path pathToGo = fs::current_path();
         pathToGo += "\\TextDir\\";
 
@@ -154,7 +155,7 @@ void loadFrame(Mat image, int frameNumber, int size) {
     /*cout << width_ratio << endl;
     cout << height_ratio << endl;*/
 
-    resize(image, imageResized, Size(), width_ratio, height_ratio);
+    resize(image, imageResized, Size(), width_ratio, height_ratio); //We resize the image based on the console's window size and the font size so that it will display full screen
 
     for (int y = 0; y < imageResized.rows; y++)
     {
@@ -164,7 +165,7 @@ void loadFrame(Mat image, int frameNumber, int size) {
 
             int colorInt = color[0];
 
-            if (colorInt >= 200) {
+            if (colorInt >= 200) { //We accentuate the black and the white to make the image better
                 colorInt += 35;
                 if (colorInt >= 255) {
                     colorInt = 255;
@@ -232,9 +233,9 @@ void loadFrame(Mat image, int frameNumber, int size) {
     finalDisplay.clear();
 }
 
-void addToDir(Mat image, int frameNumber, string parentDirName) {
+void addToDir(Mat image, int frameNumber, string parentDirName) { //Function to download the frames
 
-    if (frameNumber == 1) {
+    if (frameNumber == 1) { //We make sure we are in the right path, and create a directory for the video
 
         fs::path pathToGo = fs::current_path();
         pathToGo += "\\";
@@ -274,7 +275,7 @@ void addToDir(Mat image, int frameNumber, string parentDirName) {
 
 }
 
-void handleVideo(VideoCapture cap, string videoName){
+void handleVideo(VideoCapture cap, string videoName){ //Main function
 
     Mat frame;
     int frameNumber = 1;
@@ -282,7 +283,7 @@ void handleVideo(VideoCapture cap, string videoName){
     char downloaded;
     int size = 6;
 
-    videoName.resize(videoName.size() - 4);
+    videoName.resize(videoName.size() - 4); //We remove the ".mp4" from the video's name
 
     clear_screen();
 
@@ -304,6 +305,8 @@ void handleVideo(VideoCapture cap, string videoName){
     else {
         downloaded = 'Y';
     }
+
+    bool framesDownloaded = false;
 
     if (downloaded == 'Y') {
 
@@ -330,14 +333,18 @@ void handleVideo(VideoCapture cap, string videoName){
 
             frameNumber++;
 
-            char c = (char)waitKey(25);
+            //char c = (char)waitKey(25);
         }
 
         std::cout << "\nDone" << endl;
 
         cap.release();
+
+        framesDownloaded = true;
         
     }
+
+
 
     downloaded = 'E';
 
@@ -345,12 +352,22 @@ void handleVideo(VideoCapture cap, string videoName){
     progressBar = "";
     Mat currentFrame;
     string imagePathStr;
+    fs::path videoPath;
 
-    fs::path videoPath = fs::current_path();
-    videoPath += "\\";
-    videoPath += videoName;
-    videoPath += "\\";
+    if (framesDownloaded) {
+        videoPath = fs::current_path().parent_path();
+        videoPath += "\\";
+    }
+    else {
+        videoPath = fs::current_path();
+        videoPath += "\\";
+        videoPath += videoName;
+        videoPath += "\\";
+    }
+
+
     fs::current_path(videoPath);
+    
 
     if (fs::exists("TextDir")) {
         std::cout << "You seem to already have the text files. Do you want to re-download them ? (Y/N)" << endl;
@@ -421,7 +438,7 @@ void handleVideo(VideoCapture cap, string videoName){
     sizePath += "\\size.txt";
     int sizeInFile;
 
-    if (fs::exists(sizePath)) {
+    if (fs::exists(sizePath)) { //If the video had already been downloaded, we reuse the font size saved for it. Else, we create a new save
         ifstream streamSize(sizePath);
         stringstream sizeStream;
         sizeStream << streamSize.rdbuf();
@@ -468,10 +485,18 @@ int main()
     7 = White       F = Clear white */
 
     string videoName;
+    char videoDownloaded;
 
     clear_screen();
 
-    std::cout << "What is the video name ? Press d for default. Must be a mp4 audioless file." << endl;
+    std::cout << "Is the video already downloaded ? (Y/N)" << endl;
+    std::cin >> videoDownloaded;
+
+    if (videoDownloaded == 'N') {
+        system("python youtubeDownload.py");
+    }
+
+    std::cout << "\nWhat is the video name ? Press d for default. Must be a mp4 audioless file. If you downloaded it from youtube, it is already in the good format." << endl;
     cin >> videoName;
 
     if (videoName == "d") {
