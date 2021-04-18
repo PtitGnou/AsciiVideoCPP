@@ -8,8 +8,8 @@ The code is definitely not perfect and has several know issues.
 Furthermore, it could be improved to be more efficient in regards of CPU usage, but also in converting the video properly.  
 
 It works as follow :  
-1. Put in the same directory the .exe file, the video's audio and the video you want to convert.   
-<b>The video must be a audioless .mp4, and the audio a .wav</b>  
+1. Put in the same directory the .exe file, the video's audio and the video you want to convert <b>OR DOWNLOAD IT DIRECTLY FROM YOUTUBE IN THE RIGHT FORMAT (Python and ffmpeg needs to be installed on your computer</b>.   
+<b>The video must be a audioless .mp4, and the audio a .wav (if you download it from youtube using the script, it will already be in the right format)</b>  
 To remove the video's audio, I recommend installing ffmpeg and doing `ffmpeg -i input-video -c copy -an output-video` (remove input-video and output-video by the video's file's name).  
 
 2. Launch the .exe file : input the audioless video's file's name (without the .mp4)  
@@ -24,7 +24,7 @@ Demonstration : https://www.youtube.com/watch?v=6RpQRvMbSeA&ab_channel=PtitGnou 
  
 - [x] ~~Sometimes, there are jumps between frames~~ *Resolved by using printf instead of cout, resulting in a faster display. It can still happen with some videos, but resolvable by increasing the console's font size*
 - [x] ~~The program works really well with the Bad Apple!! video because it is big white and black shadows. However, the rendering is not as great with other videos. You can try lowering the font size in the "change_console_size()" function, but the console had trouble rendering as much text this fast on my laptop.~~ *Resolved by using printf instead of cout, resulting in faster display and making it possible to increase number of pixel being displayed without lag* 
-- [ ] The program crashes after downloading the frames. You can simply reopen the program afterwards and skip the "Download frames" part by pressing "N".  
+- [x] ~~The program crashes after downloading the frames. You can simply reopen the program afterwards and skip the "Download frames" part by pressing "N".~~ *Resolved by correcting a filesystem_error*  
 - [ ] The program doesn't take into consideration the general brightness of the image, which means that if the video is happening in a dark place for example, it will be hard to detect the different parts of the image.  
 - [ ] Sometimes, the video loses some milliseconds, which is enough to make it seem disconnected with the audio (and finish after it).
   
