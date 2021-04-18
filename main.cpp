@@ -13,13 +13,13 @@ using namespace std;
 namespace fs = std::filesystem;
 using namespace System;
 
-void change_console_size() {
+void change_console_size(int size) {
 
     CONSOLE_FONT_INFOEX cfi; //https://stackoverflow.com/questions/35382432/how-to-change-the-console-font-size
     cfi.cbSize = sizeof(cfi);
     cfi.nFont = 0;
     cfi.dwFontSize.X = 0;                   // Width of each character in the font
-    cfi.dwFontSize.Y = 6;                  // Height
+    cfi.dwFontSize.Y = size;                  // Height
     cfi.FontFamily = FF_DONTCARE;
     cfi.FontWeight = FW_NORMAL;
     std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
@@ -27,7 +27,7 @@ void change_console_size() {
 
 }
 
-void maximize_window() {
+void maximize_window() { //https://stackoverflow.com/questions/5300170/maximize-console-windows-in-windows-7/5300345#5300345
     HWND hWnd;
     SetConsoleTitle(L"ASCII Video");
     hWnd = FindWindow(NULL, L"ASCII Video");
@@ -56,13 +56,13 @@ void clear_screen(char fill = ' ') { //Function to clear console output https://
     SetConsoleCursorPosition(console, tl);
 }
 
-void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
+void displayFrame(int numberOfFrames, string textPath, const int frameRate, int size) {
     string framePath;
     string veryFinalDisplay;
 
     string musicName;
 
-    change_console_size();
+    change_console_size(size);
     maximize_window();
 
     std::cout << "What is the music name ? Press d for default, n for no music. Must be a wav file." << endl;
@@ -111,7 +111,7 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate) {
     }
 }
 
-void loadFrame(Mat image, int frameNumber) {
+void loadFrame(Mat image, int frameNumber, int size) {
 
     if (frameNumber == 1) {
         fs::path pathToGo = fs::current_path();
@@ -134,7 +134,7 @@ void loadFrame(Mat image, int frameNumber) {
 
     maximize_window();
 
-    change_console_size();
+    change_console_size(size);
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
@@ -280,6 +280,7 @@ void handleVideo(VideoCapture cap, string videoName){
     int frameNumber = 1;
     string progressBar;
     char downloaded;
+    int size = 6;
 
     videoName.resize(videoName.size() - 4);
 
@@ -289,10 +290,11 @@ void handleVideo(VideoCapture cap, string videoName){
         std::cout << "Video Working" << endl;
     }
 
-    const int frameRate = cap.get(CAP_PROP_FPS);
+    int frameRate = cap.get(CAP_PROP_FPS);
     int totalFrames = cap.get(CAP_PROP_FRAME_COUNT);
+    string frameRateInput;
 
-    std::cout << frameRate << " FPS" << endl;
+    std::cout << "The video is at " << frameRate << " FPS." << endl;
     std::cout << "There are " << totalFrames << " frames in this video." << endl;
 
     if (fs::exists(videoName)) {
@@ -305,8 +307,7 @@ void handleVideo(VideoCapture cap, string videoName){
 
     if (downloaded == 'Y') {
 
-        cout << "The image files will now be downloaded. This could take some time. Press any key to continue" << endl;
-        cin.ignore();
+        cout << "The image files will now be downloaded. This could take some time." << endl;
 
         while (true) {
             cap >> frame;
@@ -359,7 +360,20 @@ void handleVideo(VideoCapture cap, string videoName){
         downloaded = 'Y';
     }
 
+    bool wroteCurrentFile = FALSE;
+
     if (downloaded == 'Y') {
+
+        char changeSize;
+
+        cout << "The default font size is 6. The lower it is, the better the video's quality will be. We recommend not going lower than 6, as this could cause lag on the video. If 6 is already causing lag, we recommend going up to 8 or 10. Do you want to change font size ? (Y/N)" << endl;
+        cin >> changeSize;
+
+        if (changeSize == 'Y') {
+            cout << "Please insert the size you wish" << endl;
+            cin >> size;
+        }
+
         std::cout << "Downloading text files..." << endl;
         for (int n = 1; n <= totalFrames; n++) {
 
@@ -384,7 +398,7 @@ void handleVideo(VideoCapture cap, string videoName){
                 std::cout << imagePathStr << " - Could not load image" << endl;
             }
             else {
-                loadFrame(currentFrame, frameNumber);
+                loadFrame(currentFrame, frameNumber, size);
             }
 
             if (frameNumber % (totalFrames / 10) == 0) {
@@ -400,6 +414,34 @@ void handleVideo(VideoCapture cap, string videoName){
         }
 
         fs::current_path(fs::current_path().parent_path());
+        wroteCurrentFile = TRUE;
+    }
+
+    fs::path sizePath = fs::current_path();
+    sizePath += "\\size.txt";
+    int sizeInFile;
+
+    if (fs::exists(sizePath)) {
+        ifstream streamSize(sizePath);
+        stringstream sizeStream;
+        sizeStream << streamSize.rdbuf();
+        sizeInFile = stoi(sizeStream.str());
+        streamSize.close();
+
+        if (wroteCurrentFile) {
+            fs::remove_all(sizePath);
+            ofstream outfileText("size.txt");
+            outfileText << size;
+            outfileText.close();
+        }
+        else {
+            size = sizeInFile;
+        }
+    }
+    else {
+        ofstream outfileText("size.txt");
+        outfileText << size;
+        outfileText.close();
     }
 
     fs::path textPath = fs::current_path();
@@ -409,7 +451,7 @@ void handleVideo(VideoCapture cap, string videoName){
 
     std::cout << "\nAll files downloaded. Launching the video... \n";
 
-    displayFrame(totalFrames, textPathStr, frameRate);
+    displayFrame(totalFrames, textPathStr, frameRate, size);
 }
 
 int main()
