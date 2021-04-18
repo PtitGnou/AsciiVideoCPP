@@ -18,12 +18,15 @@ I recommend using this program with small videos, as it could take time. You can
 4. If it hasn't already done it, the program will then convert each frame in a .txt file. The window will be maximized, and the console font size reduced for better quality. The frames will be resized.  
 5. Finally, the program will read each .txt file one by one and display it into the window, giving the illusion of a video. The folders containing the images and the text files won't be deleted, so they can be re-used again in the future if you want to rewatch the same video. Of course, you can delete them manually.  
   
+Demonstration : https://www.youtube.com/watch?v=6RpQRvMbSeA&ab_channel=PtitGnou (files were already downloaded)
+  
 ## Known issues  
  
 - [x] ~~Sometimes, there are jumps between frames~~ *Resolved by using printf instead of cout, resulting in a faster display*
+- [x] ~~The program works really well with the Bad Apple!! video because it is big white and black shadows. However, the rendering is not as great with other videos. You can try lowering the font size in the "change_console_size()" function, but the console had trouble rendering as much text this fast on my laptop.~~ *Resolved by using printf instead of cout, resulting in faster display and making it possible to increase number of pixel being displayed without lag* 
 - [ ] The program crashes after downloading the frames. You can simply reopen the program afterwards and skip the "Download frames" part by pressing "N".  
-- [x] The program works really well with the Bad Apple!! video because it is big white and black shadows. However, the rendering is not as great with other videos. You can try lowering the font size in the "change_console_size()" function, but the console had trouble rendering as much text this fast on my laptop. *Resolved by using printf instead of cout, resulting in faster display and making it possible to increase number of pixel being displayed without lag* 
 - [ ] The program doesn't take into consideration the general brightness of the image, which means that if the video is happening in a dark place for example, it will be hard to detect the different parts of the image.  
+- [ ] Sometimes, the video loses some milliseconds, which is enough to make it seem disconnected with the audio (and finish after it).
   
 ## Disclaimer  
 
