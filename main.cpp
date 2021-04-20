@@ -97,8 +97,8 @@ void displayFrame(int numberOfFrames, string textPath, const int frameRate, int 
         framePath = textPath + to_string(t) + ".txt";
 
         ifstream stream(framePath); //We open the txt file, give its content to the veryFinalDisplay variable and print it out
-        stringstream strStream;
-        strStream << stream.rdbuf();
+        stringstream strStream;     //It maybe could be made even faster, by loading each one of the txt file in an array, then displaying the array with a for loop
+        strStream << stream.rdbuf(); //This could be tried without bothering to download each txt file, but would mean no saving of the ascii video 
         veryFinalDisplay = strStream.str();
         stream.close();
 
